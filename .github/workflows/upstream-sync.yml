@@ -1,0 +1,42 @@
+# Hourly: merge upstream (ivall/xcl) into this fork's main, but only up to the newest upstream commit whose own
+# "CI" workflow run succeeded, so a broken upstream main never lands here.
+# Upstream is trusted as the base of this fork: its maintainer already reviewed its commits, so they do not go
+# through any%5 review again.
+#
+# The push uses GITHUB_TOKEN, which cannot push workflow files: if upstream changed .github/workflows/, the push is
+# refused and the run fails, and an admin merges by hand. A push that races the any%5 coordinator retries next hour.
+name: upstream sync
+on:
+  schedule:
+    - cron: "29 * * * *"
+  workflow_dispatch:
+concurrency:
+  group: upstream-sync
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Merge the newest green upstream commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPSTREAM: ivall/xcl
+        run: |
+          set -euo pipefail
+          green=$(gh run list -R "$UPSTREAM" --branch main --workflow CI --status success --limit 1 \
+                    --json headSha --jq '.[0].headSha // empty')
+          if [ -z "$green" ]; then echo "no green upstream CI run on main; nothing to do"; exit 0; fi
+          git fetch -q "https://github.com/$UPSTREAM.git" main
+          if git merge-base --is-ancestor "$green" HEAD; then echo "already contains $green"; exit 0; fi
+          git config user.name "upstream-sync[bot]"
+          git config user.email "upstream-sync-bot@users.noreply.github.com"
+          git merge --no-edit -m "Merge upstream $UPSTREAM at ${green:0:9} (its CI run passed)" "$green"
+          git push origin HEAD:main
+          echo "merged upstream ${green:0:9}"
