@@ -1,0 +1,16 @@
+{
+ "coordinator": {
+  "box": "2iN1FsFriA15ylsHTOlOEJUswUvvpdhAoeVyk0yg6G4=",
+  "sign": "0m6CNeGw0MChnX32Mgc7qB/maZlQFC4uEuBDGCS7pe8="
+ },
+ "admins": [
+  "tibzejoker"
+ ],
+ "project": "tibzejoker/xcl",
+ "branch": "main",
+ "inbox_issue": 1,
+ "state_branch": "anyp5-state",
+ "config": {
+  "canary_source": "pending"
+ }
+}
