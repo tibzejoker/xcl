@@ -161,3 +161,8 @@ part of the repository.
 machine-readable ISA, AMD addrlib swizzle patterns, LLVM disassembler tests, AnyPS5,
 libHttpClient headers). WinDurango serves only as a reference – no code is ported from it. The
 repository contains no headers or binaries from the console SDK.
+
+## Where to start
+
+<!-- anyp5:wanted -->
+<!-- /anyp5:wanted -->
