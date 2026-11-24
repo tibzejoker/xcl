@@ -1,4 +1,4 @@
-# Hourly: merge upstream (ivall/xcl) into this fork's main, but only up to the newest upstream commit whose own
+# Daily (07:29 Paris in winter): merge upstream (ivall/xcl) into this fork's main, but only up to the newest upstream commit whose own
 # "CI" workflow run succeeded, so a broken upstream main never lands here.
 # Upstream is trusted as the base of this fork: its maintainer already reviewed its commits, so they do not go
 # through any%5 review again.
@@ -8,7 +8,7 @@
 name: upstream sync
 on:
   schedule:
-    - cron: "29 * * * *"
+    - cron: "29 6 * * *"
   workflow_dispatch:
 concurrency:
   group: upstream-sync
