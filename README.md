@@ -165,4 +165,8 @@ repository contains no headers or binaries from the console SDK.
 ## Where to start
 
 <!-- anyp5:wanted -->
+| You can run | Open tasks | Waiting on others | Active members | Tasks per member |
+|---|---:|---:|---:|---:|
+
+Updated 2026-11-25 13:31 UTC. Declare what you can run with `anyp5 caps windows gpu ...`.
 <!-- /anyp5:wanted -->
